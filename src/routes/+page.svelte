@@ -1,11 +1,7 @@
 <script>
-    // Table data
-    let people = [
-      { company: "AAA" , name: "John Doe", age: 28, occupation: "Software Developer" },
-      { company: "AAA" , name: "Jane Smith", age: 34, occupation: "Graphic Designer" },
-      { company: "AAA" , name: "Emily Brown", age: 22, occupation: "Marketing Specialist" }
-    ];
+    import { onMount } from 'svelte';
 
+    // Table data
     let rows = [
         { 품목: "아사이 소르베", 품명: "아사이 소르베", 규격: "7kg/bucket", 재고단위: "BUCKET", 발주단위: "1 BUCKET (7kg)", 전일재고: 0, 발주: 0, 입고: 0, 재고: 0, 사용량: 0 },
         // 파소카	PB 크럼브	1kg/pack	PACK	1 BOX (1kg , 4팩)
@@ -62,14 +58,19 @@
 
     let keys = Object.keys(rows[0])
 
-    // Function to handle occupation updates
-    function updateOccupation(index, event) {
-      // Update the occupation value for the specific person
-      people[index].occupation = event.target.innerText;
-  
-      // Optionally, you can save it to local storage or an API here
-      console.log('Updated people:', people);
+    // Save the updated rows to localStorage
+    function saveToLocalStorage() {
+        localStorage.setItem("tableData", JSON.stringify(rows));
     }
+
+    // Load data from localStorage when the component is mounted
+    onMount(() => {
+        const savedData = localStorage.getItem('tableData');
+        if (savedData) {
+        rows = JSON.parse(savedData);
+        }
+    });
+
 </script>
 
 <style>
@@ -113,27 +114,27 @@
             <td
                 class="py-3 px-5"
                 contenteditable="true"
-                on:input={event => rows[index].전일재고 = event.target.innerText}
+                on:input={event => {rows[index].전일재고 = event.target.innerText; saveToLocalStorage(); }}
             >{row.전일재고}</td>
             <td
                 class="py-3 px-5"
                 contenteditable="true"
-                on:input={event => rows[index].발주 = event.target.innerText}
+                on:input={event => {rows[index].발주 = event.target.innerText; saveToLocalStorage(); }}
             >{row.발주}</td>
             <td
                 class="py-3 px-5"
                 contenteditable="true"
-                on:input={event => rows[index].입고 = event.target.innerText}
+                on:input={event => {rows[index].입고 = event.target.innerText; saveToLocalStorage(); }}
             >{row.입고}</td>
             <td
                 class="py-3 px-5"
                 contenteditable="true"
-                on:input={event => rows[index].재고 = event.target.innerText}
+                on:input={event => {rows[index].재고 = event.target.innerText; saveToLocalStorage(); }}
             >{row.재고}</td>
             <td
                 class="py-3 px-5"
                 contenteditable="true"
-                on:input={event => rows[index].사용량 = event.target.innerText}
+                on:input={event => {rows[index].사용량 = event.target.innerText; saveToLocalStorage(); }}
             >{row.사용량}</td>
             </tr>
         {/each}
