@@ -9,7 +9,27 @@
 
     // user-value map
     let userValueMap = {
-        "test": "테스트"
+        "test": "테스트 지점",
+        "oakberry1": "갤러리아백화점 광교점",
+        "oakberry2": "갤러리아백화점 본점",
+        "oakberry3": "더현대 대구점",
+        "oakberry4": "더현대 서울",
+        "oakberry5": "롯데백화점 명동본점",
+        "oakberry6": "롯데백화점 부산본점",
+        "oakberry7": "롯데백화점 인천점",
+        "oakberry8": "신세계백화점 강남점",
+        "oakberry9": "신세계백화점 대구점",
+        "oakberry10": "신세계백화점 센텀시티점",
+        "oakberry11": "타임스퀘어 영등포점",
+        "oakberry12": "현대아울렛 송도점",
+        "oakberry13": "현대백화점 목동점",
+        "oakberry14": "현대백화점 무역점",
+        "oakberry15": "현대백화점 부산본점",
+        "oakberry16": "현대백화점 압구정본점",
+        "oakberry17": "현대백화점 중동점",
+        "oakberry18": "현대백화점 판교점",
+        "oakberry19": "롯데프리미엄아울렛 기흥점",
+        "oakberry20": "대전신세계 아트앤사이언스"
     }
 
     // Table data
@@ -114,7 +134,7 @@
 </head>
 <body class="bg-gray-100 p-10">
   <div class="container mx-auto">
-    <h1 class="text-3xl font-bold mb-5">오크베리 {branch} 지점</h1>
+    <h1 class="text-3xl font-bold mb-5">오크베리 {branch}</h1>
     <h2 class="text-2xl font-bold mb-5">원료 재고 관리 시트</h2>
     <table class="min-w-full bg-white border border-gray-300 rounded-lg">
       <thead>
