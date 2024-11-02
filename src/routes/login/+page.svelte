@@ -19,13 +19,21 @@
       const response = await fakeLogin(userId, password);
   
       if (response.success) {
-        // encode user id and password into base64
-        const token = btoa(JSON.stringify({ userId, password }));
-        console.log(token);
-        sessionStorage.setItem('accessToken', token);
-        goto('/');
+        if (response.name == '관리자 계정') {
+          console.log('관리자 계정으로 로그인');
+          goto('/admin');
+        } else if (response.name == '테스트 계정') {
+          console.log('테스트 계정으로 로그인');
+          // encode user id and password into base64
+          const token = btoa(JSON.stringify({ userId, password }));
+          sessionStorage.setItem('accessToken', token);
+          goto('/');
+        } else {
+          console.log('알 수 없는 계정으로 로그인');
+          error = '알 수 없는 계정입니다.';
+        }
       } else {
-        error = 'Invalid user or password';
+        error = '로그인 실패';
       }
     }
   
