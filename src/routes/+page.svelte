@@ -1,5 +1,16 @@
 <script>
     import { onMount } from 'svelte';
+    import { goto } from '$app/navigation';
+
+    let userId = '';
+    let password = '';
+
+    let branch = '';
+
+    // user-value map
+    let userValueMap = {
+        "test": "테스트"
+    }
 
     // Table data
     let rows = [
@@ -58,14 +69,41 @@
 
     let keys = Object.keys(rows[0])
 
-    // Save the updated rows to localStorage
-    function saveToLocalStorage() {
-        localStorage.setItem("tableData", JSON.stringify(rows));
+    // Save the updated rows to sessionStorage
+    function saveToSessionStorage() {
+        sessionStorage.setItem("tableData", JSON.stringify(rows));
     }
 
-    // Load data from localStorage when the component is mounted
+    function increment(index, field) {
+        // Logic to increment the value
+        rows[index][field] = parseInt(rows[index][field]) + 1;
+    }
+
+    function decrement(index, field) {
+        // Logic to decrement the value
+        rows[index][field] = parseInt(rows[index][field]) - 1;
+    }
+
+    // Load data from sessionStorage when the component is mounted
     onMount(() => {
-        const savedData = localStorage.getItem('tableData');
+        const accessToken = sessionStorage.getItem('accessToken');
+        if (!accessToken) {
+            goto('/login');
+        }
+
+        // parse base64 encoded token
+        const token = JSON.parse(atob(accessToken));
+        userId = token.userId;
+        password = token.password;
+
+        // 지점 설정
+        if (!userValueMap[userId]) {
+            branch = '알 수 없는 지점';
+        } else {
+            branch = userValueMap[userId];
+        }
+
+        const savedData = sessionStorage.getItem('tableData');
         if (savedData) {
         rows = JSON.parse(savedData);
         }
@@ -73,69 +111,45 @@
 
 </script>
 
-<style>
-    /* Add some custom CSS if needed */
-    td[contenteditable] {
-      /* border: 1px solid transparent;
-      padding: 0.5rem; */
+<!-- <style>
+    th, td {
+        border-left: 1px solid #ccc;
+        border-right: 1px solid #ccc;
     }
-    
-    td[contenteditable]:focus {
-      outline: 1px solid blue;
-    }
-</style>
+</style> -->
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Editable Table with Tailwind CSS</title>
+  <title>오크베리</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 p-10">
   <div class="container mx-auto">
-    <h1 class="text-2xl font-bold mb-5">원료 재고 관리 시트</h1>
+    <h1 class="text-3xl font-bold mb-5">오크베리 {branch} 지점</h1>
+    <h2 class="text-2xl font-bold mb-5">원료 재고 관리 시트</h2>
     <table class="min-w-full bg-white border border-gray-300 rounded-lg">
       <thead>
         <tr class="bg-gray-100 border-b border-gray-300">
           {#each keys as key}
-            <th class="py-3 px-5 text-left">{key}</th>
+            <th class="py-3 px-5 border-l border-r border-gray-300 text-middle">{key}</th>
           {/each}
         </tr>
       </thead>
       <tbody>
         {#each rows as row, index}
             <tr class="border-b border-gray-300">
-            <td class="py-3 px-5">{row.품목}</td>
-            <td class="py-3 px-5">{row.품명}</td>
-            <td class="py-3 px-5">{row.규격}</td>
-            <td class="py-3 px-5">{row.재고단위}</td>
-            <td class="py-3 px-5">{row.발주단위}</td>
+            <td class="py-3 px-5 border-l border-r border-gray-300">{row.품목}</td>
+            <td class="py-3 px-5 border-l border-r border-gray-300">{row.품명}</td>
+            <td class="py-3 px-5 border-l border-r border-gray-300">{row.규격}</td>
+            <td class="py-3 px-5 border-l border-r border-gray-300">{row.재고단위}</td>
+            <td class="py-3 px-5 border-l border-r border-gray-300">{row.발주단위}</td>
             <!-- Make the Occupation column editable -->
-            <td
-                class="py-3 px-5"
-                contenteditable="true"
-                on:input={event => {rows[index].전일재고 = event.target.innerText; saveToLocalStorage(); }}
-            >{row.전일재고}</td>
-            <td
-                class="py-3 px-5"
-                contenteditable="true"
-                on:input={event => {rows[index].발주 = event.target.innerText; saveToLocalStorage(); }}
-            >{row.발주}</td>
-            <td
-                class="py-3 px-5"
-                contenteditable="true"
-                on:input={event => {rows[index].입고 = event.target.innerText; saveToLocalStorage(); }}
-            >{row.입고}</td>
-            <td
-                class="py-3 px-5"
-                contenteditable="true"
-                on:input={event => {rows[index].재고 = event.target.innerText; saveToLocalStorage(); }}
-            >{row.재고}</td>
-            <td
-                class="py-3 px-5"
-                contenteditable="true"
-                on:input={event => {rows[index].사용량 = event.target.innerText; saveToLocalStorage(); }}
-            >{row.사용량}</td>
+            <td class="py-3 px-5 border-l border-r border-gray-300 w-24"><input type="number" min="0" value={row.전일재고} on:input={event => { row.전일재고 = event.target.value || 0; saveToSessionStorage(); }} class="w-full"/></td>
+            <td class="py-3 px-5 border-l border-r border-gray-300 w-24"><input type="number" min="0" value={row.발주} on:input={event => { row.발주 = event.target.value || 0; saveToSessionStorage(); }} class="w-full"/></td>
+            <td class="py-3 px-5 border-l border-r border-gray-300 w-24"><input type="number" min="0" value={row.입고} on:input={event => { row.입고 = event.target.value || 0; saveToSessionStorage(); }} class="w-full"/></td>
+            <td class="py-3 px-5 border-l border-r border-gray-300 w-24"><input type="number" min="0" value={row.재고} on:input={event => { row.재고 = event.target.value || 0; saveToSessionStorage(); }} class="w-full"/></td>
+            <td class="py-3 px-5 border-l border-r border-gray-300 w-24"><input type="number" min="0" value={row.사용량} on:input={event => { row.사용량 = event.target.value || 0; saveToSessionStorage(); }} class="w-full"/></td>
             </tr>
         {/each}
       </tbody>
