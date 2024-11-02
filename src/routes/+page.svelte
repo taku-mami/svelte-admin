@@ -147,17 +147,17 @@
       <tbody>
         {#each rows as row, index}
             <tr class="border-b border-gray-300">
-            <td class="py-3 px-5 border-l border-r border-gray-300">{row.품목}</td>
-            <td class="py-3 px-5 border-l border-r border-gray-300">{row.품명}</td>
-            <td class="py-3 px-5 border-l border-r border-gray-300">{row.규격}</td>
-            <td class="py-3 px-5 border-l border-r border-gray-300">{row.재고단위}</td>
-            <td class="py-3 px-5 border-l border-r border-gray-300">{row.발주단위}</td>
+            <td class="py-3 px-5 border-l border-r border-gray-300 min-w-[150px]">{row.품목}</td>
+            <td class="py-3 px-5 border-l border-r border-gray-300 min-w-[300px]">{row.품명}</td>
+            <td class="py-3 px-5 border-l border-r border-gray-300 min-w-[150px]">{row.규격}</td>
+            <td class="py-3 px-5 border-l border-r border-gray-300 min-w-[150px]">{row.재고단위}</td>
+            <td class="py-3 px-5 border-l border-r border-gray-300 min-w-[200px]">{row.발주단위}</td>
             <!-- Make the Occupation column editable -->
-            <td class="py-3 px-5 border-l border-r border-gray-300 w-24"><input type="number" min="0" value={row.전일재고} on:input={event => { row.전일재고 = event.target.value || 0; saveToSessionStorage(); }} class="w-full"/></td>
-            <td class="py-3 px-5 border-l border-r border-gray-300 w-24"><input type="number" min="0" value={row.발주} on:input={event => { row.발주 = event.target.value || 0; saveToSessionStorage(); }} class="w-full"/></td>
-            <td class="py-3 px-5 border-l border-r border-gray-300 w-24"><input type="number" min="0" value={row.입고} on:input={event => { row.입고 = event.target.value || 0; saveToSessionStorage(); }} class="w-full"/></td>
-            <td class="py-3 px-5 border-l border-r border-gray-300 w-24"><input type="number" min="0" value={row.재고} on:input={event => { row.재고 = event.target.value || 0; saveToSessionStorage(); }} class="w-full"/></td>
-            <td class="py-3 px-5 border-l border-r border-gray-300 w-24"><input type="number" min="0" value={row.사용량} on:input={event => { row.사용량 = event.target.value || 0; saveToSessionStorage(); }} class="w-full"/></td>
+            <td class="py-3 px-5 border-l border-r border-gray-300 w-24 min-w-[100px]"><input type="tel" min="0" value={row.전일재고} on:input={event => { row.전일재고 = event.target.value || 0; saveToSessionStorage(); }} class="w-full"/></td>
+            <td class="py-3 px-5 border-l border-r border-gray-300 w-24 min-w-[100px]"><input type="tel" min="0" value={row.발주} on:input={event => { row.발주 = event.target.value || 0; saveToSessionStorage(); }} class="w-full"/></td>
+            <td class="py-3 px-5 border-l border-r border-gray-300 w-24 min-w-[100px]"><input type="tel" min="0" value={row.입고} on:input={event => { row.입고 = event.target.value || 0; saveToSessionStorage(); }} class="w-full"/></td>
+            <td class="py-3 px-5 border-l border-r border-gray-300 w-24 min-w-[100px]"><input type="tel" min="0" value={row.재고} on:input={event => { row.재고 = event.target.value || 0; saveToSessionStorage(); }} class="w-full"/></td>
+            <td class="py-3 px-5 border-l border-r border-gray-300 w-24 min-w-[100px]"><input type="tel" min="0" value={row.사용량} on:input={event => { row.사용량 = event.target.value || 0; saveToSessionStorage(); }} class="w-full"/></td>
             </tr>
         {/each}
       </tbody>
