@@ -74,21 +74,12 @@
         sessionStorage.setItem("tableData", JSON.stringify(rows));
     }
 
-    function increment(index, field) {
-        // Logic to increment the value
-        rows[index][field] = parseInt(rows[index][field]) + 1;
-    }
-
-    function decrement(index, field) {
-        // Logic to decrement the value
-        rows[index][field] = parseInt(rows[index][field]) - 1;
-    }
-
     // Load data from sessionStorage when the component is mounted
     onMount(() => {
         const accessToken = sessionStorage.getItem('accessToken');
         if (!accessToken) {
             goto('/login');
+            return;
         }
 
         // parse base64 encoded token
@@ -111,12 +102,9 @@
 
 </script>
 
-<!-- <style>
-    th, td {
-        border-left: 1px solid #ccc;
-        border-right: 1px solid #ccc;
-    }
-</style> -->
+<style>
+    
+</style>
 
 <head>
   <meta charset="UTF-8">
