@@ -2,6 +2,7 @@
     import { onMount } from 'svelte';
     import { goto } from '$app/navigation';
 
+    let today = new Date().toISOString().split('T')[0];
     let userId = '';
     let password = '';
 
@@ -136,6 +137,7 @@
   <div class="container mx-auto">
     <h1 class="text-3xl font-bold mb-5">오크베리 {branch}</h1>
     <h2 class="text-2xl font-bold mb-5">원료 재고 관리 시트</h2>
+    <h3 class="text-xl font-bold mb-5">날짜: {today}</h3>
     <table class="min-w-full bg-white border border-gray-300 rounded-lg">
       <thead>
         <tr class="bg-gray-100 border-b border-gray-300">
